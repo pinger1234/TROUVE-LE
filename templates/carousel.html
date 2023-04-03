@@ -5,11 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>carousel</title>
-    <link rel="icon" href="../static/img/logo.png" type="image/png">
-    <link href="../static/css/daisyui.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="../static/css/animate.css" />
-    <link rel="stylesheet" href="../static/css/tailwind.min.css" />
-    <script src="../static/js/tailwindcss.js"></script>
+    {% include 'header.html' %}
     <style>
     body,
     html {
@@ -41,7 +37,7 @@
     </style>
 </head>
 
-<body>
+<body data-theme="dark">
     <div class="carousel carousel-vertical rounded-box">
         <div class="carousel-item h-full">
             <img src="../static/img/c1.png" class="h-full" />

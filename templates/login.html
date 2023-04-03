@@ -2,27 +2,28 @@
 <html lang="fr" data-theme="dark">
     <head>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="X-UA-Compatible" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
         <!-- <link rel="stylesheet" href="../static/css/glass.css"> -->
-        <link href="https://cdn.jsdelivr.net/npm/daisyui@2.49.0/dist/full.css" rel="stylesheet" type="text/css" />
-        <script src="https://cdn.tailwindcss.com"></script>
-        <link rel="icon" href="../static/img/logo.png" type="image/png">
-        <link href="../static/css/daisyui.css" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" href="../static/css/animate.min.css" />
-        <link rel="stylesheet" href="../static/css/tailwind.min.css" />
-        <script src="../static/js/tailwindcss.js"></script>
-        <title>Document</title>
-        <link rel="icon" href="../static/img/logo.png" type="image/png">
+        {% include 'header.html' %}
+        <title>Authentification</title>
     </head>
-    <body class="w3-container w3-theme-l3">
-        <form method="get" class="w3-container w3-padding w3-display-middle">
+    <body class="" data-theme="dark">
+        <br>
+        <form method="post" action="" class="">
+            
+            <br><br>
             <label class="w3-text-blue"><b>Contact</b></label>
-            <input class="w3-input w3-border w3-round-large" name="contact" type="text">
+            <input type="text" placeholder="Contact" class="input input-bordered w-full max-w-xs" name="contact"/>
+            <br>
+            <!-- <input class="w3-input w3-border w3-round-large" name="contact" type="text">-->
             <label class="w3-text-blue"><b>Mot de passe</b></label>
-            <input class="w3-input w3-border w3-round-large" name="password" type="password">
-            <input type="button" class="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg" value="Connexion">
+            <input type="password" placeholder="********" class="input input-bordered w-full max-w-xs" name="password"/>
+            <!--<input class="w3-input w3-border w3-round-large" name="password" type="password">-->
+            <br>
+            <input type="submit" class="btn btn-primar" value="Connexion">
+            <br>
             <div>
                 <p><a href="#">Mot de passe oublié</a></p>
                 <p><a href="/signup"> <i>Je m'inscris ?</i> </a></p>

@@ -5,10 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-        <link href="https://cdn.jsdelivr.net/npm/daisyui@2.49.0/dist/full.css" rel="stylesheet" type="text/css" />
-        <script src="https://cdn.tailwindcss.com"></script>
-        <link rel="icon" href="../static/img/logo.png" type="image/png">
-        <title>Trouve-le</title>
+        {% include 'header.html' %}
+        <title>Creer un compte</title>
         <style>
             form {
                 margin-left: auto;
@@ -28,7 +26,7 @@
             }
         </style>
     </head>
-    <body class="w3-container w3-theme-l3">
+    <body class="w3-container w3-theme-l3" data-theme="dark">
         <form method="POST" action="" class="w3-container" enctype="multipart/form-data">
             <label class="w3-text-blue"><b>Nom</b></label>
             <input class="w3-input w3-border w3-round-large" name="first_name" type="text">
@@ -42,7 +40,7 @@
                 <option value="Carte Nationale d'Identité">Carte Nationale d'Identité</option>
                 <option value="Passport">Passport</option>
                 <option value="Attestation d'Identité">Attestation d'Identité</option>
-            </select>
+            </select>   
             <label class="w3-text-blue"><b>Numéro de la pièce</b></label>
             <input class="w3-input w3-border w3-round-large" name="number_piece" type="text">
             <label class="w3-text-blue"><b>Phote de la pièce</b></label>

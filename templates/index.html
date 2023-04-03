@@ -4,11 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>index</title>
-	<link rel="icon" href="../static/img/logo.png" type="image/png">
-
-	<link href="../static/css/daisyui.css" rel="stylesheet" type="text/css" />
-  	<link rel="stylesheet" href="../static/css/animate.min.css"/>
-  	<script src="../static/js/tailwindcss.js"></script>
+	{% include 'header.html' %}
 	<style>
 
 		body,html{
@@ -34,9 +30,9 @@
 		}
 	</style>
 </head>
-<body>
+<body data-theme="dark">
 	<div>
-		<img class="animate__animated animate__bounce" src="../static/img/logo.png" alt="logo">
+		<img class="animate__animated animate__bounce" src="url_for('static',filename='img/logo.png')" alt="logo">
 	</div>
 	
 </body>

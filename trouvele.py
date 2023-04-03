@@ -10,7 +10,7 @@ from pydantic import BaseModel #pip install pydantic
 import os
 from cookies import *  #pip install cookies
 from PIL import Image
-import imageio.v3 as iio # pip install imageio
+# import imageio.v3 as iio # pip install imageio
 
 # --------------------------- {Module de chiffrage} ----------------------------------------
 from hashlib import *

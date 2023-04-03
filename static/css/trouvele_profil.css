@@ -1,0 +1,32 @@
+body{
+    padding: 0px;
+    margin: 0px;
+    margin-top: 10px;
+}
+
+.frame_7{
+    position: absolute;
+    width: 68px;
+    height: 747px;
+    left: 152px;
+    top: 139px;
+    background:blue;
+}
+
+.zone_defilement{
+    position: absolute;
+    width: 669px;
+    height: 747px;
+    left: 220px;
+    top: 139px;
+    background: #FFFFFF
+}
+
+.zone_profil{
+    position: absolute;
+    width: 399px;
+    height: 746px;
+    left: 889px;
+    top: 139px;
+    background: red;
+}

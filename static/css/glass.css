@@ -1,0 +1,16 @@
+form{
+	background: -moz-linear-gradient(top,  rgb(149, 203, 25) 0%, rgba(255,255,255,0) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(31, 22, 158)), color-stop(100%,rgba(25, 2, 71, 0)));
+	background: -webkit-linear-gradient(top,  rgb(192, 182, 11) 0%,rgba(202, 10, 202, 0) 100%);
+	background: -o-linear-gradient(top,  rgb(33, 9, 169) 0%,rgba(84, 96, 4, 0) 100%);
+	background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);
+	background: linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);
+	border: 2px solid #DDDBD7;	
+	-webkit-box-shadow: 3px 3px 10px rgba(35, 6, 141, 0.744),	inset 0 0 10px rgba(142, 8, 8, 0.886); 
+	-moz-box-shadow: 	3px 3px 10px rgba(35, 6, 141, 0.744),	inset 0 0 10px rgba(142, 8, 8, 0.886);
+	box-shadow: 		3px 3px 10px rgba(35, 6, 141, 0.744),	inset 0 0 10px rgba(142, 8, 8, 0.886);
+	-webkit-border-raduis: 10px;
+	-moz-border-raduis: 10px;
+	border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}

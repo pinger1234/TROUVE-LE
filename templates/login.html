@@ -1,27 +1,50 @@
 <!DOCTYPE html>
 <html lang="fr" data-theme="dark">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
-        <!-- <link rel="stylesheet" href="../static/css/glass.css"> -->
-        {% include 'header.html' %}
-        <title>Authentification</title>
-        
-    </head>
-    <body class="" data-theme="dark" class="">
-        <br>
-        <form method="post" action="" class="">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
+    <!-- <link rel="stylesheet" href="../static/css/glass.css"> -->
+    {% include 'header.html' %}
+    <title>Authentification</title>
+    <style>
+        html, body{
+                margin: 0px;
+                padding:0px;
+            }
+            body{
+                display: flex;
+                flex-direction: column;
+                padding: 20%;
+
+            }
+
             
-            <br><br>
-            <label class="w3-text-blue"><b>Contact</b></label>
-            <input type="text" placeholder="Contact" class="input input-bordered w-full max-w-xs" name="contact"/>
-            <br>
-            <!-- <input class="w3-input w3-border w3-round-large" name="contact" type="text">-->
-            <label class="w3-text-blue"><b>Mot de passe</b></label>
-            <input type="password" placeholder="********" class="input input-bordered w-full max-w-xs" name="password"/>
-            <!--<input class="w3-input w3-border w3-round-large" name="password" type="password">-->
+        </style>
+</head>
+
+<body class="" data-theme="light" class="">
+    <center>
+        <img src="{{url_for('static',filename='img/logo.png')}}" style="width:50%"alt="">
+    </center>
+    
+    <form method="post" action="" class="card shadow-xl">
+        <br>
+        <center>
+            <div class="form-control w-full max-w-xs w-96">
+                <label class="label">
+                    <span class="label-text">Identifiants</span>
+                </label>
+                <input type="text" placeholder="Saisir ici" class="input input-bordered w-full max-w-xs" name="contact" />
+            </div>
+            <div class="form-control w-full max-w-xs">
+                <label class="label">
+                    <span class="label-text">Saisir votre mot de passe?</span>
+                </label>
+                <input type="password" placeholder="********" class="input input-bordered w-full max-w-xs" name="password" />
+            </div>
             <br>
             <button class="btn btn-primary"> <input type="submit" value="Connexion"></button>
             <br>
@@ -29,6 +52,8 @@
                 <p><a href="#">Mot de passe oublié</a></p>
                 <p><a href="/signup"> <i>Je m'inscris ?</i> </a></p>
             </div>
-        </form>
-    </body>
+        </center>
+    </form>
+</body>
+
 </html>

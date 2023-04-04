@@ -5,8 +5,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
-    <!-- <link rel="stylesheet" href="../static/css/glass.css"> -->
     {% include 'header.html' %}
     <title>Authentification</title>
     <style>
@@ -18,18 +16,16 @@
                 display: flex;
                 flex-direction: column;
                 padding: 20%;
+                padding-top: 10%;
 
             }
 
-            
         </style>
 </head>
-
-<body class="" data-theme="light" class="">
+<body class="" data-theme="night" class="">
     <center>
-        <img src="{{url_for('static',filename='img/logo.png')}}" style="width:50%"alt="">
+        <img src="{{url_for('static',filename='img/logo.png')}}" style="width:50%" alt="">
     </center>
-    
     <form method="post" action="" class="card shadow-xl">
         <br>
         <center>
@@ -48,10 +44,13 @@
             <br>
             <button class="btn btn-primary"> <input type="submit" value="Connexion"></button>
             <br>
-            <div>
-                <p><a href="#">Mot de passe oublié</a></p>
-                <p><a href="/signup"> <i>Je m'inscris ?</i> </a></p>
-            </div>
+            <div class="form-control w-full max-w-xs w-96">
+                <a href="#" class="link link-primary">Mot de passe oublié ?</a>
+            </div><br>
+                <a href="/signup" class="btn btn-outline btn-primary"><i class="fa fa-pencil"> </i> S'inscrire </a>
+                <br>
+            
+            <br>
         </center>
     </form>
 </body>

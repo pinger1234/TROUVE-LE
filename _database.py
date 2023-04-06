@@ -5,8 +5,10 @@
 # 〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜
 from __future__ import unicode_literals
 from deta import *
-import bcrypt
+
+# import bcrypt
 from flask import request, jsonify
+from werkzeug.security import generate_password_hash, check_password_hash
 
 # 〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜
 # [1] [Creation des fonctions pour l'ajout d'utilisateur ]
@@ -16,12 +18,12 @@ from flask import request, jsonify
 # Datakey = "a03qi4zrdq7_Tr6fSQyVRzP9u7xgbyssQSoZzEeeceQY"
 # deta = Deta(Datakey)
 
-salt = bcrypt.gensalt()
+# salt = bcrypt.gensalt()
 
 
 def add_user(db, user):
-    bytes = user.password.encode("utf-8")
-    hashed = bcrypt.hashpw(bytes, salt)
+    # bytes = user.password.encode("utf-8")
+    hashed = generate_password_hash(user.password)
     print("===========================")
     print(hashed)
     try:
@@ -36,8 +38,10 @@ def add_user(db, user):
                 "npiece": user.npiece,
                 "tel": user.tel,
                 "email": user.email,
-                "password": hashed.decode("utf-8"),
-            }
+                "password": hashed,
+                "validate": user.validate,
+            },
+            expire_in=600,
         )
         print("-------User enregistré")
         return True
@@ -52,6 +56,7 @@ def save_file(drive_name, file_name, file_data):
         print("-------Image user sauvegardé")
         return True
     except:
+        drive_name.put(file_name, path="static/img/profile-default.png")
         print("++++ erreur sauvegarde image")
         return False
 
@@ -71,8 +76,8 @@ def get_all(db):
     return db.fetch().items
 
 
-def update_user(db, key, new_data):
-    user = db.put(new_data, key)
+def update_user(db, key, new_data, expire_in):
+    user = db.put(new_data, key, expire_in=expire_in)
     return user
 
 
@@ -82,8 +87,8 @@ def delete_user(db, key):
 
 
 def pass_correct(passeword, hashed):
-    userBytes = passeword.encode("utf-8")
-    result = bcrypt.checkpw(userBytes, hashed)
+    # userBytes = passeword.encode("utf-8")
+    result = check_password_hash(hashed, passeword)
     return result
 
 
@@ -114,3 +119,4 @@ class utilisateur:
         self.tel = ""
         self.email = ""
         self.passeword = ""
+        self.validate = False

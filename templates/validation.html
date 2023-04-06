@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>validation</title>
+    {% include 'header.html' %}
+    <link rel="stylesheet" href='{{url_for("static",filename="css/validation.css")}}'>
+</head>
+
+<body data-theme="night">
+    {% if message=="bad-code" %}
+    <div class="alert alert-warning shadow-lg" style="position: sticky; top:10px; z-index: 10;">
+        <div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span>Le code de verification est incorrect.</span>
+        </div>
+    </div>
+    {% else %}
+        <center> <h1 class="font-bold">Vous dévez valider votre e-mail !</h1>
+        </center>
+    {% endif %}
+	<center class="w-full">
+        <div >
+            <img src="{{url_for('static',filename='img/logo.png')}}" style="width:30%" alt="">
+        </div>
+    </center>
+    <center>
+    <div class="zone-digit">
+    <form class="otc" name="one-time-code" action="" method="post">
+        <fieldset>
+            <legend>Saisir le code de validation</legend>
+            <label for="otc-1">Number 1</label>
+            <label for="otc-2">Number 2</label>
+            <label for="otc-3">Number 3</label>
+            <label for="otc-4">Number 4</label>
+            <label for="otc-5">Number 5</label>
+            <label for="otc-6">Number 6</label>
+            <div>
+                <input type="number" name="n1"  pattern="[0-9]*" min="0" max="9" maxlength="1" value="" inputtype="numeric" autocomplete="one-time-code" id="otc-1" required>
+                <input type="number" name="n2"  pattern="[0-9]*" min="0" max="9" maxlength="1" value="" inputtype="numeric" id="otc-2" required>
+                <input type="number" name="n3"  pattern="[0-9]*" min="0" max="9" maxlength="1" value="" inputtype="numeric" id="otc-3" required>
+                <input type="number" name="n4"  pattern="[0-9]*" min="0" max="9" maxlength="1" value="" inputtype="numeric" id="otc-4" required>
+                <input type="number" name="n5"  pattern="[0-9]*" min="0" max="9" maxlength="1" value="" inputtype="numeric" id="otc-5" required>
+                <input type="number" name="n6"  pattern="[0-9]*" min="0" max="9" maxlength="1" value="" inputtype="numeric" id="otc-6" required>
+            </div>
+        </fieldset><br>
+        <button class="btn btn-primary">
+                <input class="" id="submit_butt" type="submit" value="Valider">
+        </button>
+    </form>	
+    </div>
+	</center>
+	<a href="#" class="link link-primary">Envoyer à nouveau ?</a> 
+    <script type="text/javascript" src='{{url_for("static",filename="js/validation.js")}}'>
+    </script>
+</body>
+
+</html>

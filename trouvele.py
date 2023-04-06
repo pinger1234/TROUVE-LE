@@ -12,7 +12,20 @@ from flask import (
     request,
     redirect,
     url_for,
+    jsonify,
 )  # pip install flask
+
+# from flask_mail import Mail, Message
+from mailer import Mailer  # pip install quick-mailer
+from flask_login import (
+    LoginManager,
+    UserMixin,
+    login_required,
+    login_user,
+    logout_user,
+    current_user,
+)  # pip install flask-login
+from urllib.parse import urlparse, urljoin
 
 # from pydantic import BaseModel  # pip install pydantic
 # from cookies import *  # pip install cookies
@@ -20,6 +33,7 @@ from flask import (
 import os
 from _database import *
 from _forms import *
+from _validation import *
 
 # --------------------------- {Module de chiffrage} ----------------------------------------
 from hashlib import *
@@ -52,16 +66,63 @@ img_declaration = deta.Drive("img_declaration")
 
 # ================ {Variables} ==================
 
-# photo_profil = Image.open("static/img/logo.png",mode="r")
-# photo_piece = Image.open("static/img/logo.png",mode="r")
 
-
+app = Flask(__name__)
+app.config["SECRET_KEY"] = "GvU7GWAn_4ZAs2z8fPiCk6HzxHajpRjDq4qAuYM45"
+mail = Mailer(email="lacentrale.cognitive@gmail.com", password="xfyvwxvgmfizdmqs")
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
+login_manager.login_message = "Connectez-vous pour accéder à cette page."
 # 〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜
 # [2] [definition des fonctions ]
 # 〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜
 
 
-app = Flask(__name__)
+def is_safe_url(target):
+    ref_url = urlparse(request.host_url)
+    test_url = urlparse(urljoin(request.host_url, target))
+    return test_url.scheme in ("http", "https") and ref_url.netloc == test_url.netloc
+
+
+def get_redirect_target():
+    for target in request.values.get("next"), request.referrer:
+        if not target:
+            continue
+        if is_safe_url(target):
+            return target
+
+
+def redirect_back(endpoint, **values):
+    target = request.form["next"]
+    if not target or not is_safe_url(target):
+        target = url_for(endpoint, **values)
+    return redirect(target)
+
+
+# def load_model_from_dict(self, data: dict):
+#     for key, value in data.items():
+#         self.__dict__[key] = value
+#     return self
+
+
+class dict_to_user(UserMixin):
+    def __init__(self, data):
+        for key, value in data.items():
+            self.__dict__[key] = value
+
+    def get_id(self):
+        return self.key
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    data = users.get(user_id)
+    print(data)
+    user = dict_to_user(data)
+    print(user)
+    print(user.nom)
+    return user
 
 
 @app.route("/")
@@ -72,12 +133,6 @@ def home():
 @app.route("/carousel/")
 def carousel():
     return render_template("carousel.html")
-
-
-@app.route("/login/", methods=["POST", "GET"])
-def login():
-    print(get_all(users))
-    return render_template("login.html")
 
 
 @app.route("/signup/", methods=["POST", "GET"])
@@ -97,8 +152,8 @@ def signup():
         user.email = request.form["email"]
         user.password = request.form["password"]
         passwordconfirm = request.form["passwordconfirm"]
-        user.pp = str(user.tel) + ".webp"
-
+        user.pp = str(user.tel) + ".png"
+        user.validate = False
         if user_exist(users, user.tel):
             return render_template(
                 "signup.html",
@@ -120,25 +175,28 @@ def signup():
                 file_data = request.files.get("pp")
                 file_ext = file_data.filename.split(".")[-1]
                 user.pp = str(user.tel) + "." + file_ext
-                # print("Donnees image:-----------------")
-                # print(file_data)
-                # print("Nom fichier image:-----------------")
-                # print(file_name)
                 save_file(users_pp, user.pp, file_data)
-                result = add_user(users, user)
-            print("reponse d'ajout utilisateur:", result)
+
             else:
                 file_data = open("static/img/profile-default.png", "rb")
                 print(file_data.readlines())
                 save_file(users_pp, str(user.tel) + ".png", file_data.readlines())
                 file_data.close()
+
+            user.validate = gen_validation_code()
+            message = validation_message(user.validate)
+            objet = "VALIDATION DE MAIL POUR TROUVE-LE"
+            destination = user.email
+            result = add_user(users, user)
+            print("reponse d'ajout utilisateur:", result)
             if result == False:
                 return render_template(
                     "signup.html",
                     message="erreur",
                 )
             else:
-                return redirect(url_for("login"))
+                send_mail(mail, objet, message, destination)
+                return redirect(url_for("validation", key=user.key))
         else:
             return render_template(
                 "signup.html",
@@ -146,48 +204,84 @@ def signup():
             )
     else:
         return render_template("signup.html", message="")
-    # Creation d'image par defaut de photo de profile et de piece d'identité
-    # photo_profil = Image.open(url_for("static",filename="img/logo.png"), mode="rb")
-    # photo_piece = Image.open(url_for("static",filename="img/logo.png"), mode="rb")
 
-    # photo_profil = Image.open("static/img/logo.png", mode="r")
-    # photo_profil = iio.imread("imageio:static/img/logo.png")
-    # # photo_piece = Image.open("static/img/logo.png", mode="r")
-    # photo_piece = iio.imread("imageio:static/img/logo.png")
 
-    # file_ext = "png"
+@app.route("/validation/<key>", methods=["POST", "GET"])
+def validation(key):
+    print(get_all(users))
+    user = get_user(users, key)
+    if request.method == "GET":
+        if user:
+            print(user)
+            # print(user.validate)
+            return render_template("validation.html", message="")
+        else:
+            return render_template("session_error.html")
+    else:
+        code = str(
+            str(request.form["n1"])
+            + str(request.form["n2"])
+            + str(request.form["n3"])
+            + str(request.form["n4"])
+            + str(request.form["n5"])
+            + str(request.form["n6"])
+        )
+        print(code)
+        confirmation = validate_user(users, key, code)
+        if confirmation:
+            return redirect(url_for("login"))
+        else:
+            return render_template("validation.html", message="bad-code")
 
-    # recupération des images depuis le formulaire si elle ont été envoyées
-    # if request.files["photo_profil"]:
-    #     photo_profil = request.files.get("photo_profil")
-    #     file_ext = photo_profil.filename.split(".")[-1]
 
-    # if request.files["photo_piece"]:
-    #     photo_piece = request.files.get("photo_piece")
-    #     file_ext=photo_piece.filename.split(".")[-1]
+@app.route("/login/", methods=["POST", "GET"])
+def login():
+    # print(get_all(users))
+    if current_user.is_authenticated:
+        return redirect(url_for("accueil"))
+    if request.method == "POST":
+        input_key = request.form["key"]
+        print(input_key)
+        input_password = request.form["password"]
+        user = get_user(users, input_key)
+        if user and pass_correct(input_password, user["password"]) and user["validate"]:
+            print("======Login user added successfully")
+            print(user)
+            remember = request.form["remember"]
+            login_user(load_user(input_key), remember=remember)
+            next = request.args.get("next")
+            if not is_safe_url(next):
+                return abort(400)
+            print(current_user)
+            return redirect(next or url_for("accueil"))
+        elif (
+            user
+            and pass_correct(input_password, user["password"])
+            and not user["validate"]
+        ):
+            return redirect(url_for("validation", key=input_key))
+        else:
+            return render_template("login.html", message="login-error")
+    return render_template("login.html", message="")
 
-    # Ajout des images dans le drive de deta
-    # pp.put(number_piece + "." + file_ext, photo_piece)
-    # identite.put(number_piece + "." + file_ext, photo_piece)
 
-    # # Sauvegarde des données dans la base de données users
-    # users.put(
-    #     {
-    #         "First_name": name,
-    #         "Last_name": second_name,
-    #         "Birthday": birthday,
-    #         "Number_of_piece": number_piece,
-    #         "Type_piece": type_piece,
-    #         "Photo_piece": "identite/" + number_piece + "." + file_ext,
-    #         "Photo_profil": "pp/" + number_piece + "." + file_ext,
-    #         "Contact": contact,
-    #         "Email": email,
-    #         "Password": password,
-    #         "Password_confirm": passwordconfirm,
-    #     }
-    # )
+@app.route("/accueil", methods=["POST", "GET"])
+@login_required
+def accueil():
+    return render_template("accueil.html")
 
-    # return render_template("login.html")
+
+@app.route("/settings")
+@login_required
+def settings():
+    pass
+
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for("login"))
 
 
 if __name__ == "__main__":

@@ -7,7 +7,7 @@ data = {}
 
 
 def declarations():
-    for i in range(1, 21):
+    for i in range(1, 50):
         numero = f"declaration-{i}"
         auteur = "".join(
             random.choices(string.ascii_uppercase + string.ascii_lowercase, k=10)

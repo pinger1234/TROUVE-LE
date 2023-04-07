@@ -34,8 +34,9 @@
     		animation: fadeInDownBig; 
   			animation-duration: 1.5s; 
   			padding: 2%;
+/*             height: 250px; */
 /*   			width: 250px; */
-/*   			width: 80vw; */
+  			width: 90vw;
     	}
     	.dec-image{
     		width: 160px;
@@ -65,13 +66,15 @@
 
 <body data-theme="night">
     <div class="search-bar" >
-        <div class="navbar bg-base-100">
+        <div class="navbar bg-base-100 shadow-xl">
             <div class="flex-1">
-                <a class="btn btn-ghost normal-case text-xl">Trouvele</a>
+                <!-- <a class="btn btn-ghost normal-case text-xl">Trouvele</a> -->
+                <label for="my-modal" class="btn btn-ghost normal-case text-xl">Trouvele</label>
+                
             </div>
             <div class="flex-none gap-2">
                 <div class="form-control">
-                    <input type="text" placeholder="Filtrer" class="input input-bordered" />
+                    <input type="text" placeholder="Filtrer" class="input input-bordered" oninput="w3.filterHTML('.list-declaration', '.declaration', this.value)"/>
                 </div>
                 <div class="">
                     <label tabindex="0" class="btn btn-ghost btn-circle avatar">
@@ -88,10 +91,13 @@
         <div class="declaration card card-side bg-base-100 shadow-xl">
             <figure><img class="dec-image mask mask-squircle" src="{{url_for('static',filename='img/default_pp.webp')}}" alt="Movie" /></figure>
             <div class="card-body">
-                <h2 class="card-title">{{val}} New movie is released!</h2>
-                <p>Click the button to watch on Jetflix app.</p>
+                <h2 class="card-title">N°: {{val}}</h2>
+                <p>Click the button to watch on ...</p>
+                <p> De: {{declarations[val].auteur}}</p>
+                <p> Le: {{declarations[val].date}}</p>
+                <!-- <p>{{declarations[val].description}}</p> -->
                 <div class="card-actions justify-end">
-                    <button class="btn btn-primary">{{declarations[val].date}}</button>
+                    <button class="btn btn-primary">Plus</button>
                 </div>
             </div>
         </div>
@@ -102,6 +108,17 @@
             {% include 'bottom_nav.html' %}
         </center>
     </div>
+<input type="checkbox" id="my-modal" class="modal-toggle" />
+<div class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg">Trouve-le 2.0</h3>
+    <p class="py-4">Trouve-le est une application qui permet de retrouver des objets perdus en les déclarents.
+Vous pouvez informer la communauté lorsque vous avez perdu un objet et aussi informer si vous en avez rétrouvé.</p>
+    <div class="modal-action">
+      <label for="my-modal" class="btn">Merci</label>
+    </div>
+  </div>
+</div>
 </body>
 
 </html>

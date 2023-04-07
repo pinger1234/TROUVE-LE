@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from urllib.parse import urlparse, urljoin
 
 # 〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜
 # [0] [Importation des modules et packages]
@@ -15,7 +16,6 @@ from flask import (
     jsonify,
 )  # pip install flask
 
-# from flask_mail import Mail, Message
 from mailer import Mailer  # pip install quick-mailer
 from flask_login import (
     LoginManager,
@@ -25,21 +25,15 @@ from flask_login import (
     logout_user,
     current_user,
 )  # pip install flask-login
-from urllib.parse import urlparse, urljoin
 
-# from pydantic import BaseModel  # pip install pydantic
-# from cookies import *  # pip install cookies
-# from PIL import Image # pip install pillow
-import os
+
 from _database import *
 from _forms import *
 from _validation import *
+from _declaration import *
 
 # --------------------------- {Module de chiffrage} ----------------------------------------
-from hashlib import *
-import secrets
-import getpass
-import re
+
 
 # 〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜
 # [1] [Configuration de Deta et initialisation des bases de données]
@@ -51,7 +45,6 @@ import re
 
 cle_trouve_le = "a0azww1wj87_tJRPYB72Z9XWSpd5Nx4n6VMTNaUfakcZ"
 deta = Deta(cle_trouve_le)
-
 
 # ================ {Base de données} ===============
 
@@ -68,8 +61,11 @@ img_declaration = deta.Drive("img_declaration")
 
 
 app = Flask(__name__)
+
+
 app.config["SECRET_KEY"] = "GvU7GWAn_4ZAs2z8fPiCk6HzxHajpRjDq4qAuYM45"
 mail = Mailer(email="lacentrale.cognitive@gmail.com", password="xfyvwxvgmfizdmqs")
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
@@ -100,12 +96,6 @@ def redirect_back(endpoint, **values):
     return redirect(target)
 
 
-# def load_model_from_dict(self, data: dict):
-#     for key, value in data.items():
-#         self.__dict__[key] = value
-#     return self
-
-
 class dict_to_user(UserMixin):
     def __init__(self, data):
         for key, value in data.items():
@@ -118,10 +108,7 @@ class dict_to_user(UserMixin):
 @login_manager.user_loader
 def load_user(user_id):
     data = users.get(user_id)
-    print(data)
     user = dict_to_user(data)
-    print(user)
-    print(user.nom)
     return user
 
 
@@ -159,15 +146,13 @@ def signup():
                 "signup.html",
                 message="user-exist",
             )
-        elif (
-            user_exist(users, user.tel) == False
-        ) and passwordconfirm != user.password:
+        elif not get_user(users, user.tel) and passwordconfirm != user.password:
             return render_template(
                 "signup.html",
                 message="passe-confirm-error",
             )
         elif (
-            (user_exist(users, user.tel) == False)
+            not user_exist(users, user.tel)
             and passwordconfirm == user.password
             and passwordconfirm != ""
         ):
@@ -179,8 +164,8 @@ def signup():
 
             else:
                 file_data = open("static/img/profile-default.png", "rb")
-                print(file_data.readlines())
-                save_file(users_pp, str(user.tel) + ".png", file_data.readlines())
+                file_name = str(user.tel) + ".png"
+                save_file(users_pp, file_name, file_data.readlines())
                 file_data.close()
 
             user.validate = gen_validation_code()
@@ -189,7 +174,7 @@ def signup():
             destination = user.email
             result = add_user(users, user)
             print("reponse d'ajout utilisateur:", result)
-            if result == False:
+            if not result:
                 return render_template(
                     "signup.html",
                     message="erreur",
@@ -241,9 +226,12 @@ def login():
         return redirect(url_for("accueil"))
     if request.method == "POST":
         input_key = request.form["key"]
-        print(input_key)
-        input_password = request.form["password"]
-        user = get_user(users, input_key)
+        if input_key == "":
+            return render_template("login.html", message="login-error")
+        else:
+            print(input_key)
+            input_password = request.form["password"]
+            user = get_user(users, input_key)
         if user and pass_correct(input_password, user["password"]) and user["validate"]:
             print("======Login user added successfully")
             print(user)
@@ -268,7 +256,9 @@ def login():
 @app.route("/accueil", methods=["POST", "GET"])
 @login_required
 def accueil():
-    return render_template("accueil.html")
+    declar = declarations()
+    # print(declar)
+    return render_template("accueil.html", declarations=declar)
 
 
 @app.route("/settings")

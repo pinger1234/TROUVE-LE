@@ -22,7 +22,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 
 def add_user(db, user):
-    # bytes = user.password.encode("utf-8")
     hashed = generate_password_hash(user.password)
     print("===========================")
     print(hashed)
@@ -120,3 +119,14 @@ class utilisateur:
         self.email = ""
         self.passeword = ""
         self.validate = False
+
+
+def declarations():
+    decla = {
+        "auteur": "",
+        "date": "",
+        "type": "",
+        "lieu": "",
+        "description": "",
+        "photo": "",
+    }

@@ -1,6 +1,6 @@
 # Presentation projet
 ## Nom du projet
-	<h1 color="red">Trouve-le</h1>
+	*Trouve-le*
 ## Logo
 ![Logo de trouvele](static/img/logo.png)
 ## Description
@@ -30,7 +30,7 @@ BackEnd:
 - python3 
 	+ Framework : Flask
 	+ Database : Deta Base
-	+ storage : Deta Drive
+	+ Storage : Deta Drive
 	
 Le dévéloppement actuelle de trouve-le se fait avec la technologie du microframework python **flask**.
 La base de données et la gestion de fichiers est gérer actuellemnt avec Deta

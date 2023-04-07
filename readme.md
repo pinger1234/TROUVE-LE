@@ -38,6 +38,7 @@ La base de données et la gestion de fichiers est gérer actuellemnt avec Deta
 
 ## Arboressence
 
+```bash
 .
 │   .gitignore
 │   main.py
@@ -84,7 +85,7 @@ La base de données et la gestion de fichiers est gérer actuellemnt avec Deta
         session_error.html
         signup.html
         validation.html
-
+```
 
 ## Réalisés:
 - Splash screen
@@ -106,9 +107,9 @@ La base de données et la gestion de fichiers est gérer actuellemnt avec Deta
 # Demos
 
 ![Gif 1](demo/demo1.gif) 
+
 ![Gif 2](demo/demo2.gif) 
 
-
-
 ![Gif 3](demo/demo3.gif) 
+
 ![Gif 4](demo/demo4.gif)

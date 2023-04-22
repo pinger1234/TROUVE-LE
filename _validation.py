@@ -5,7 +5,6 @@ import numpy as np
 from deta import *
 import datetime
 from _database import *
-from pushbullet import Pushbullet
 
 
 def is_tel(value):
@@ -53,9 +52,13 @@ def validate_user(db, key, code):
         return False
 
 
-def sendSms(pb, number, message):
+def sendSms(pb, number, code):
+    message = f"""Vous avez essayé de creer un compte 'Trouve-le'. \n
+    Votre code de validation est :  {code}. \n
+    Ce code expirera dans 10 minutes à compter de {datetime.datetime.now().strftime('%d-%m-%y %H:%M:%S')}.
+    """
     phone = pb.devices[0]
-    pb.send(phone, number, message)
+    pb.push_sms(phone, number, message)
 
 
 # print(gen_validation_code())

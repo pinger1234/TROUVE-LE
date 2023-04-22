@@ -1,22 +1,29 @@
 .otc {
 	position: relative;
-	width: 320px;
-	margin: 0 auto;
+	width: 250px;
+/*	margin: 0 auto;*/
+
 }
 
 .otc fieldset {
 	border: 0;
 	padding: 0;
 	margin: 0;
+	display: flex;
+	align-items:center;
+	justify-content: center;
+	flex-direction:column;
 }
 
 .otc fieldset div {
 	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
 	align-items: center;
 }
 
 .otc legend {
-	margin: 0 auto 1em;
+/*	margin: 0 auto 1em;*/
 	color: #5555ff;
 }
 
@@ -73,10 +80,13 @@ html {
 	height: 100%;
 }
 body{
-	padding:15%
+	padding:0%
 }
 .zone-digit {
 	display: flex;
+	flex-direction:column;
 	align-items: center;
-	justif-content: center;
+	align-content: center;
+	justify-content: center;
+	text-align:center;
 }

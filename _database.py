@@ -15,12 +15,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # [1] [Creation des fonctions pour l'ajout d'utilisateur ]
 # 〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜
 
-# Token = "GvU7GWAn_4ZAs2z8fPiCk6HzxHajpRjDq4qAuYM45"
-# Datakey = "a03qi4zrdq7_Tr6fSQyVRzP9u7xgbyssQSoZzEeeceQY"
-# deta = Deta(Datakey)
-
-# salt = bcrypt.gensalt()
-
 
 def add_user(db, user):
     hashed = generate_password_hash(user.password)
@@ -120,12 +114,14 @@ class utilisateur:
         self.validate = False
 
 
-def declarations():
-    decla = {
-        "auteur": "",
-        "date": "",
-        "type": "",
-        "lieu": "",
-        "description": "",
-        "photo": "",
-    }
+def add_declarations(db, declaration):
+    db.put(
+        {
+            "auteur": "",
+            "date": "",
+            "type": "",
+            "lieu": "",
+            "description": "",
+            "photo": "",
+        }
+    )

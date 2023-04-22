@@ -36,10 +36,8 @@
             <span>Le code de verification est incorrect.</span>
         </div>
     </div>
-    {% elif message=="1" %}
-    <h1 class="font-bold">Vous dévez valider votre e-mail !</h1>
     {% else %}
-    <h1 class="font-bold">Saisissez le code de validation envoyé par sms !</h1>
+    <h1 class="font-bold">Saisissez le code réçu par sms !</h1>
     {% endif %}
 	<center class="w-full">
         <div >
@@ -73,9 +71,7 @@
 
     </form>	
     </div>
-	<!-- <a href="#" class="link link-primary">Envoyer à nouveau par email ?</a>  -->
-    <br>
-    <a href="{{ url_for('validation', key=key, mode=2) }}" class="btn btn-primary">Recevoir par sms</a> 
+	<a href="#" class="link link-primary">Envoyer à nouveau ?</a> 
     <script type="text/javascript" src='{{url_for("static",filename="js/validation.js")}}'>
     </script>
 </body>

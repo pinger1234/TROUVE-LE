@@ -17,7 +17,7 @@
                 flex-direction: column;
                 padding: 10%;
                 padding-top: 10%;
-                height: 100%;
+                height: 100vh;
 
             }
             form{
@@ -27,7 +27,8 @@
 </head>
 
 <body class="" data-theme="night" class="">
-    {% if message=="login-error" %}
+    <div style="height:100%">
+        {% if message=="login-error" %}
     <center style="position: sticky; top:10px; z-index: 10;">
         <div class="alert alert-error shadow-lg" style="position: sticky; top:10px; z-index: 10;">
             <div>
@@ -48,7 +49,7 @@
                 <label class="label">
                     <span class="label-text">Identifiants</span>
                 </label>
-                <input type="text" placeholder="Saisir ici" class="input input-bordered w-full max-w-xs" name="key" />
+                <input type="text" placeholder="Numero de téléphone" class="input input-bordered w-full max-w-xs" name="key" />
             </div>
             <div class="form-control w-full max-w-xs">
                 <label class="label">
@@ -74,5 +75,7 @@
             <br>
         </center>
     </form>
+    </div>
+    
 </body>
 </html>

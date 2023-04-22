@@ -35,6 +35,23 @@ BackEnd:
 Le dévéloppement actuelle de trouve-le se fait avec la technologie du microframework python **flask**.
 La base de données et la gestion de fichiers est gérer actuellemnt avec Deta
 
+*Nb: Vous devez creer vos propre token pour les teste au risque d'exposer nos données perso*
+## Token a creer
+1-Token deta space <link rel="stylesheet" type="text/css" href="https://deta.space/from-cloud">
+2-Token pushbullet <link rel="stylesheet" type="text/css" href="pushbullet.com">
+<br>
+
+Pour creer toutes les variables d'environnment à ce stade du projet, vous devez faire depuis l'invite de commande:
+
+```bash
+set cle_trouve_le=votre_token_deta
+set push_key=votre_token_pushbullet
+set SECRET_KEY=un_code_aleatoire_puissant_a_generer
+set centrale_email=votremail@gmail.com # Ici nous avons l'adresse mail Pour envoyer des code de validation à 6 chiffres
+set centrale_email_password=mot_de_passe_du_mail
+```
+
+Si vous travailler dans un environnement unix (*Une distribution linux ou mac-os...*) n'oubliez pas de remplacer **set** par **export**
 
 ## Arboressence
 

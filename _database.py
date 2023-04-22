@@ -4,10 +4,11 @@
 # [0] [Importation des modules]
 # 〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜
 from __future__ import unicode_literals
-from deta import *
 
-# import bcrypt
-from flask import request, jsonify
+# from deta import *
+
+# # import bcrypt
+from flask import jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 
 # 〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜
@@ -24,7 +25,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 def add_user(db, user):
     hashed = generate_password_hash(user.password)
     print("===========================")
-    print(hashed)
     try:
         db.put(
             {
@@ -86,7 +86,6 @@ def delete_user(db, key):
 
 
 def pass_correct(passeword, hashed):
-    # userBytes = passeword.encode("utf-8")
     result = check_password_hash(hashed, passeword)
     return result
 

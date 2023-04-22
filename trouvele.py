@@ -42,10 +42,11 @@ from _declaration import *
 
 # Token = "GvU7GWAn_4ZAs2z8fPiCk6HzxHajpRjDq4qAuYM45"
 # Datakey = "a03qi4zrdq7_Tr6fSQyVRzP9u7xgbyssQSoZzEeeceQY"
-
+# ================Deta config
 cle_trouve_le = "a0azww1wj87_tJRPYB72Z9XWSpd5Nx4n6VMTNaUfakcZ"
 deta = Deta(cle_trouve_le)
-
+# =================Pushbullet config
+push_key = "o.w0dtb189AHhohgsnkT1CYcWU7BHR3jHM"
 # ================ {Base de données} ===============
 
 users = deta.Base("users")

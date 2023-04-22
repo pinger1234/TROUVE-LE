@@ -3,9 +3,9 @@ from __future__ import unicode_literals
 import re
 import numpy as np
 from deta import *
-import time
 import datetime
 from _database import *
+from pushbullet import Pushbullet
 
 
 def is_tel(value):
@@ -53,4 +53,9 @@ def validate_user(db, key, code):
         return False
 
 
-# prit(gen_validation_code())
+def sendSms(pb, number, message):
+    phone = pb.devices[0]
+    pb.send(phone, number, message)
+
+
+# print(gen_validation_code())

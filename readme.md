@@ -109,13 +109,13 @@ Si vous travailler dans un environnement unix (*Une distribution linux ou mac-os
 - carousel
 - signup
 - validation par e-mail
+- validation par sms 
 - login
 	+ login
 	+ logout
 
 ## A faire
 
-- validation par sms 
 - validation par whatsapp
 - declaration
 - restauration de mot de passe

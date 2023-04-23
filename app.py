@@ -208,25 +208,28 @@ def validation(key, mode):
     print(get_all(users))
     user = get_user(users, key)
     if request.method == "GET":
-        if user:
-            print(key)
-            if int(mode) == 1:
-                print(user)
-                print("par mail")
-                # print(user.validate)
-                return render_template(
-                    "validation.html", message="1", mode=mode, key=key
-                )
-            else:
-                code = get_user(users, key)["validate"]
-                number = key
-                print(key)
-                sendSms(pb, number, code)
-                return render_template(
-                    "validation.html", message="", mode=mode, key=key
-                )
+        if current_user.is_authenticated:
+            return redirect(url_for("accueil"))
         else:
-            return render_template("session_error.html")
+            if user:
+                print(key)
+                if int(mode) == 1:
+                    print(user)
+                    print("par mail")
+                    # print(user.validate)
+                    return render_template(
+                        "validation.html", message="1", mode=mode, key=key
+                    )
+                else:
+                    code = get_user(users, key)["validate"]
+                    number = key
+                    print(key)
+                    sendSms(pb, number, code)
+                    return render_template(
+                        "validation.html", message="", mode=mode, key=key
+                    )
+            else:
+                return render_template("session_error.html")
     else:
         code = str(
             str(request.form["n1"])
@@ -289,7 +292,7 @@ def accueil():
 @app.route("/settings")
 @login_required
 def settings():
-    pass
+    return render_template("settings.html")
 
 
 @app.route("/logout")
@@ -297,6 +300,13 @@ def settings():
 def logout():
     logout_user()
     return redirect(url_for("login"))
+
+
+@app.route("/declaration")
+@login_required
+def declaration():
+    declar = declarations()
+    return render_template("declaration.html", declarations=declar)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil</title>
+    {% include 'header.html' %}
+    <link rel="stylesheet" href="{{url_for('static',filename='css/signup.css')}}">
+    <style>
+        :root {
+            --animate-duration: 500ms;
+            --animate-delay: 0.5s;
+            scroll-behavior: smooth;
+        }   
+        body{
+            scroll-behavior: smooth;
+            height: 100vh;
+            
+        }
+        .list-declaration::-webkit-scrollbar {
+          width: 8px;
+        }
+         
+        .list-declaration::-webkit-scrollbar-track {
+          box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        }
+         
+        .list-declaration::-webkit-scrollbar-thumb {
+          background-color: #38bdf8;
+          border-radius:40px;
+        }
+
+
+        .list-declaration{
+            margin: 0;
+            width: 100vw;
+            height:100vh;
+            position:fixed;
+            background-color: black ;
+/*          padding: 2%; */
+            padding-top: 5vh;
+            padding-bottom: 200px;
+            z-index: 0;
+            display:flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+        .declaration{
+            border-radius:20% 20% 20% 40% / 60% 30% 70% 40%;
+            margin:5px;
+            margin-top: 10px;
+            animation: fadeInDownBig; 
+            animation-duration: 1.5s; 
+            padding: 2%;
+            width: auto;
+        }
+        .dec-image{
+            width: 160px;
+            margin:5px;
+        }
+        .search-bar{
+            position: sticky;
+            top:0px;
+            left:15%;
+            display:none;
+            align-content: center;
+            justify-content:  center;
+/*          width: 70%;*/
+            z-index:5;
+            animation:bounceIn;
+            animation-duration: 1s; 
+            overflow: hidden;
+
+        }
+        .navbar{
+            border-radius: 40px;
+            width: 100%;
+            margin: 0%;
+
+        }
+    </style>
+</head>
+
+<body data-theme="night">
+    <div class="search-bar">
+        <div class="navbar bg-base-100 shadow-xl">
+            <div class="flex-1">
+                <!-- <a class="btn btn-ghost normal-case text-xl">Trouvele</a> -->
+                <label for="my-modal" class="btn btn-ghost normal-case text-xl">Trouvele</label>
+            </div>
+            <div class="flex-none gap-2">
+ <!--                <div class="form-control">
+                    <input type="text" placeholder="Filtrer" class="input input-bordered" oninput="w3.filterHTML('.list-declaration', '.declaration', this.value)" />
+                </div> -->
+                <div class="">
+                    <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+                        <div class="w-10 rounded-full">
+                            <img src="{{url_for('static',filename='img/default_pp.webp')}}" />
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="declarer">
+        <form method="POST" action="" class="shadow-xl" style="padding:10%; border-radius:30px" enctype="multipart/form-data">
+        <center>
+            <div class="avatar-upload">
+                <div class="avatar-edit ">
+                    <input type='file' name="pp" id="imageUpload" accept=".png, .jpg, .jpeg" />
+                    <label for="imageUpload" class="mask mask-squircle shadow-xl"></label>
+                </div>
+                <div class="avatar-preview mask mask-squircle shadow-xl">
+                    <div id="imagePreview" class="mask mask-squircle" style="background-image: url( {{url_for('static',filename='img/default_pp.webp')}} );">
+                    </div>
+                </div>
+            </div>
+            <div class="form-control w-full max-w-xs w-96">
+                <label class="label">
+                    <span class="label-text">Nom</span>
+                </label>
+                <input type="text" placeholder="Ex: Koffi" class="input input-bordered w-full max-w-xs" name="nom" />
+            </div>
+            <div class="form-control w-full max-w-xs w-96">
+                <label class="label">
+                    <span class="label-text">Prénom</span>
+                </label>
+                <input type="text" placeholder="Ex: Yao Jean" class="input input-bordered w-full max-w-xs" name="prenoms" />
+            </div>
+            <div class="form-control w-full max-w-xs w-96">
+                <label class="label">
+                    <span class="label-text">Date de naissance</span>
+                </label>
+                <input name="naissance" type="date" placeholder="Date de naissance" class="input input-bordered w-full max-w-xs" />
+            </div>
+            <div class="form-control w-full max-w-xs w-96">
+                <label class="label">
+                    <span class="label-text">Type de pièce</span>
+                </label>
+                <select class="select select-bordered" name="piece">
+                    <!-- <option value="" disabled>Choisir votre pièce</option> -->
+                    <option value="Carte Nationale d'Identité" selected="selected">Carte Nationale d'Identité</option>
+                    <option value="Passport">Passport</option>
+                    <option value="Attestation d'Identité">Attestation d'Identité</option>
+                </select>
+            </div>
+            <div class="form-control w-full max-w-xs w-96">
+                <label class="label">
+                    <span class="label-text">Numéro de la pièce</span>
+                </label>
+                <input name="npiece" type="text" placeholder="Ex: CI002210580" class="input input-bordered w-full max-w-xs" />
+            </div>
+            <div class="form-control w-full max-w-xs w-96">
+                <label class="label">
+                    <span class="label-text">Téléphone</span>
+                </label>
+                <input name="tel" type="tel" placeholder="Ex: 0787580485" class="input input-bordered w-full max-w-xs" pattern="[0-9]{10}" />
+            </div>
+            <div class="form-control w-full max-w-xs w-96">
+                <label class="label">
+                    <span class="label-text">Email</span>
+                </label>
+                <input name="email" type="email" placeholder="Ex: koffi@gmail.com" class="input input-bordered w-full max-w-xs" />
+            </div>
+            <div class="form-control w-full max-w-xs w-96">
+                <label class="label">
+                    <span class="label-text">Mot de passe</span>
+                </label>
+                <input name="password" type="password" placeholder="********" class="input input-bordered w-full max-w-xs" />
+            </div>
+            <div class="form-control w-full max-w-xs w-96">
+                <label class="label">
+                    <span class="label-text">Confirmer le mot de passe</span>
+                </label>
+                <input name="passwordconfirm" type="password" placeholder="********" class="input input-bordered w-full max-w-xs" />
+            </div>
+            <br>
+            <div class="form-control w-full max-w-xs w-96">
+                <button class="btn btn-primary">
+                    <input class="" id="submit_butt" type="submit" value="Enregistrer">
+                </button>
+            </div>
+            <a href='{{url_for("login")}}' class="link link-primary"> Vous avez déjà un compte ?</a>
+        </center>
+    </form>
+    <script>
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $("#imagePreview").css(
+                "background-image",
+                "url(" + e.target.result + ")"
+            );
+            $("#imagePreview").hide();
+            $("#imagePreview").fadeIn(650);
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+$("#imageUpload").change(function() {
+    readURL(this);
+});
+</script>
+
+
+    </div>
+    <div class="" style="position: fixed; bottom:20px; z-index:10; border-radius:30%; padding-left:5%;padding-right:5%; width:100%">
+        <center>
+            {% include 'bottom_nav.html' %}
+        </center>
+    </div>
+    <input type="checkbox" id="my-modal" class="modal-toggle" />
+    <div class="modal">
+        <div class="modal-box">
+            <h3 class="font-bold text-lg">Trouve-le 2.0</h3>
+            <p class="py-4">Trouve-le est une application qui permet de retrouver des objets perdus en les déclarents. Vous pouvez informer la communauté lorsque vous avez perdu un objet et aussi informer si vous en avez rétrouvé.</p>
+            <div class="modal-action">
+                <label for="my-modal" class="btn">Merci</label>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

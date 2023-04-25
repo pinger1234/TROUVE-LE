@@ -86,26 +86,6 @@
 </head>
 
 <body data-theme="night">
-    <div class="search-bar">
-        <div class="navbar bg-base-100 shadow-xl">
-            <div class="flex-1">
-                <!-- <a class="btn btn-ghost normal-case text-xl">Trouvele</a> -->
-                <label for="my-modal" class="btn btn-ghost normal-case text-xl">Trouvele</label>
-            </div>
-            <div class="flex-none gap-2">
- <!--                <div class="form-control">
-                    <input type="text" placeholder="Filtrer" class="input input-bordered" oninput="w3.filterHTML('.list-declaration', '.declaration', this.value)" />
-                </div> -->
-                <div class="">
-                    <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-                        <div class="w-10 rounded-full">
-                            <img src="{{url_for('static',filename='img/default_pp.webp')}}" />
-                        </div>
-                    </label>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="declarer">
         <form method="POST" action="" class="shadow-xl" style="padding:10%; border-radius:30px" enctype="multipart/form-data">
         <center>
@@ -201,10 +181,10 @@ function readURL(input) {
         };
         reader.readAsDataURL(input.files[0]);
     }
-}
-$("#imageUpload").change(function() {
+    }
+    $("#imageUpload").change(function() {
     readURL(this);
-});
+    });
 </script>
 
 

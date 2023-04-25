@@ -289,6 +289,13 @@ def accueil():
     return render_template("accueil.html", declarations=declar)
 
 
+@app.route("/declaration/")
+@login_required
+def declaration():
+    declar = declarations()
+    return render_template("declaration.html", declarations=declar)
+
+
 @app.route("/settings")
 @login_required
 def settings():
@@ -300,13 +307,6 @@ def settings():
 def logout():
     logout_user()
     return redirect(url_for("login"))
-
-
-@app.route("/declaration")
-@login_required
-def declaration():
-    declar = declarations()
-    return render_template("declaration.html", declarations=declar)
 
 
 if __name__ == "__main__":

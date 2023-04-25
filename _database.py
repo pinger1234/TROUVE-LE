@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 # # import bcrypt
 from flask import jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
+import datetime
 
 # 〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜
 # [1] [Creation des fonctions pour l'ajout d'utilisateur ]
@@ -117,11 +118,22 @@ class utilisateur:
 def add_declarations(db, declaration):
     db.put(
         {
-            "auteur": "",
-            "date": "",
-            "type": "",
-            "lieu": "",
-            "description": "",
-            "photo": "",
+            "auteur": declaration.auteur,
+            "date": declaration.date,
+            "type": declaration.type,
+            "lieu": declaration.lieu,
+            "description": declaration.description,
+            "photo": declaration.photo,
+            "horodator": datetime.datetime.now().strftime("%d-%m-%y %H:%M:%S"),
         }
     )
+
+
+class db_declaration:
+    def __init__(self):
+        self.auteur = ""
+        self.date = ""
+        self.type = ""
+        self.lieu = ""
+        self.description = ""
+        self.photo = ""

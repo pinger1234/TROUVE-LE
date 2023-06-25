@@ -36,7 +36,7 @@
             width: 100vw;
             height:100vh;
             position:fixed;
-            background-color: black ;
+/*          background-color: black ;*/
 /*          padding: 2%; */
             padding-top: 5vh;
             padding-bottom: 200px;
@@ -45,17 +45,19 @@
             flex-direction: row;
             flex-wrap: wrap;
             justify-content: space-around;
+            align-content:start;
             overflow-y: auto;
             scroll-behavior: smooth;
         }
         .declaration{
-            border-radius:20% 20% 20% 40% / 60% 30% 70% 40%;
-            margin:5px;
+            border-radius:10% 10% 20% 40% / 20% 50% 20% 20%;
+            margin:1px;
             margin-top: 10px;
             animation: fadeInDownBig; 
             animation-duration: 1.5s; 
             padding: 2%;
             width: auto;
+            flex-direction: column;
         }
         .dec-image{
             width: 160px;
@@ -63,12 +65,14 @@
         }
         .search-bar{
             position: sticky;
+            padding: 10px;
+            /* margin: 10px; */
             top:0px;
             left:15%;
-            display:none;
+            /*display:none;*/
             align-content: center;
             justify-content:  center;
-/*          width: 70%;*/
+            /* width: 70%; */
             z-index:5;
             animation:bounceIn;
             animation-duration: 1s; 
@@ -84,7 +88,7 @@
     </style>
 </head>
 
-<body data-theme="night">
+{% include 'theme.html' %}
     <div class="search-bar">
         <div class="navbar bg-base-100 shadow-xl">
             <div class="flex-1">
@@ -93,7 +97,7 @@
             </div>
             <div class="flex-none gap-2">
                 <div class="form-control">
-                    <input type="text" placeholder="Filtrer" class="input input-bordered" oninput="w3.filterHTML('.list-declaration', '.declaration', this.value)" />
+                    <input type="text" placeholder="Chercher..." class="input input-bordered" style="width: 45vw;" oninput="w3.filterHTML('.list-declaration', '.declaration', this.value)" />
                 </div>
                 <div class="">
                     <label tabindex="0" class="btn btn-ghost btn-circle avatar">

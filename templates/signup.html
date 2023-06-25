@@ -10,7 +10,8 @@
     <title>Creer un compte</title>
 </head>
 
-<body class="" data-theme="night">
+{% include 'theme.html' %}
+
     {% if message=="passe-vide" %}
     <div class="alert alert-warning shadow-lg" style="position: sticky; top:10px; z-index: 10;">
         <div>

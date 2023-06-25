@@ -27,7 +27,8 @@
     </style>
 </head>
 
-<body data-theme="dark">
+{% include 'theme.html' %}
+
     {% if message=="bad-code" %}
     <div class="alert alert-warning shadow-lg" style="position: sticky; top:10px; z-index: 10;">
         <div>

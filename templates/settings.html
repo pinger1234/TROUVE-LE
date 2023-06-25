@@ -1,15 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>parametre</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>parametre</title>
+    {% include 'header.html' %}
+    <link rel="stylesheet" href="{{url_for('static',filename='css/signup.css')}}">
+    <style>
+        :root {
+            --animate-duration: 500ms;
+            --animate-delay: 0.5s;
+            scroll-behavior: smooth;
+        }
+        body, html{
+
+            margin: 0px;
+        }
+        body{
+            scroll-behavior: smooth;
+            height: 100vh;
+            align-items:center;            
+        }
+        .declarer{
+            overflow:auto;
+            padding-bottom:60px;
+        }
+        form{
+            overflow:auto;
+        }
+    </style>
 </head>
-<body>
-	    <div class="" style="position: fixed; bottom:20px; z-index:10; border-radius:30%; padding-left:5%;padding-right:5%; width:100%">
+
+    {% include 'theme.html' %}
+    
+    {% if message=="passe-vide" %}
+    <div class="alert alert-warning shadow-lg" style="position: sticky; top:10px; z-index: 10;">
+        <div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span>Vous n'avez pas saisie de mot de passe.</span>
+        </div>
+    </div>
+    {% elif message=="user-exist" %}
+    <div class="alert alert-warning shadow-lg" style="position: sticky; top:10px; z-index: 10;">
+        <div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+            <span>Utilisateur existe déjà !</span>
+        </div>
+    </div>
+    {% elif message=="passe-confirm-error" %}
+    <div class="alert alert-error shadow-lg" style="position: sticky; top:10px; z-index: 10;">
+        <div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span>Le mot de passe de confirmation est incorrecte.</span>
+        </div>
+    </div>
+    {% elif message=='erreur' %}
+    <div class="alert alert-error shadow-lg" style="position: sticky; top:10px; z-index: 10;">
+        <div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span>Une erreur a été rencontrée lors de la soumission du formulaire !</span>
+        </div>
+    </div>
+    {% else %}
+    <center class="w-full">
+        <div >
+            <img src="{{url_for('static',filename='img/logo.png')}}" style="width:60%" alt="">
+        </div>
+        <h1 class="font-bold">Profile utilisateur</h1>
+    </center>
+    {% endif %}
+    <div class="declarer">
+        <form method="POST" action="" class="shadow-xl" style="padding:10%; border-radius:30px" enctype="multipart/form-data">
+            <center>
+                <div class="avatar-upload">
+                    <div class="avatar-edit ">
+                        <input type='file' name="pp" id="imageUpload" accept=".png, .jpg, .jpeg" />
+                        <label for="imageUpload" class="mask mask-squircle shadow-xl"></label>
+                    </div>
+                    <div class="avatar-preview mask mask-squircle shadow-xl">
+                        <div id="imagePreview" class="mask mask-squircle" style="background-image: url( {{url_for('static',filename='img/default_pp.webp')}} );">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-control w-full max-w-xs w-96">
+                    <label class="label">
+                        <span class="label-text">Nom</span>
+                    </label>
+                    <input type="text" value="{{current_user.nom}}" class="input input-bordered w-full max-w-xs" name="nom" disabled />
+                </div>
+                <div class="form-control w-full max-w-xs w-96">
+                    <label class="label">
+                        <span class="label-text">Prénom</span>
+                    </label>
+                    <input type="text" value="{{current_user.prenoms}}" class="input input-bordered w-full max-w-xs" name="prenoms" disabled/>
+                </div>
+                <div class="form-control w-full max-w-xs w-96">
+                    <label class="label">
+                        <span class="label-text">Date de naissance</span>
+                    </label>
+                    <input name="naissance" type="date" value="current_user.naissance" class="input input-bordered w-full max-w-xs" disabled />
+                </div>
+                <div class="form-control w-full max-w-xs w-96">
+                    <label class="label">
+                        <span class="label-text">Type de pièce</span>
+                    </label>
+                    <select class="select select-bordered" name="piece" disabled>
+                        <!-- <option value="" disabled>Choisir votre pièce</option> -->
+                        <option value="Carte Nationale d'Identité" selected="selected">Carte Nationale d'Identité</option>
+                        <option value="Passport">Passport</option>
+                        <option value="Attestation d'Identité">Attestation d'Identité</option>
+                    </select>
+                </div>
+                <div class="form-control w-full max-w-xs w-96">
+                    <label class="label">
+                        <span class="label-text">Numéro de la pièce</span>
+                    </label>
+                    <input name="npiece" type="text" value="{{current_user.npiece}}0" class="input input-bordered w-full max-w-xs" disabled/>
+                </div>
+                <div class="form-control w-full max-w-xs w-96">
+                    <label class="label">
+                        <span class="label-text">Téléphone</span>
+                    </label>
+                    <input name="tel" type="tel" value="{{current_user.tel}}" class="input input-bordered w-full max-w-xs" pattern="[0-9]{10}" disabled />
+                </div>
+                <div class="form-control w-full max-w-xs w-96">
+                    <label class="label">
+                        <span class="label-text">Email</span>
+                    </label>
+                    <input name="email" type="email" placeholder="Ex: koffi@gmail.com" value="{{current_user.email}}" class="input input-bordered w-full max-w-xs" disabled />
+                </div>
+                <div class="form-control w-full max-w-xs w-96">
+                    <label class="label">
+                        <span class="label-text">Mot de passe</span>
+                    </label>
+                    <input name="password" type="password" placeholder="********" class="input input-bordered w-full max-w-xs" disabled />
+                </div>
+                <div class="form-control w-full max-w-xs w-96" style="display:none">
+                    <label class="label">
+                        <span class="label-text">Confirmer le mot de passe</span>
+                    </label>
+                    <input name="passwordconfirm" type="password" placeholder="********" class="input input-bordered w-full max-w-xs" />
+                </div>
+                <br>
+                <div class="form-control w-full max-w-xs w-96" style="display:none">
+                    <button class="btn btn-primary">
+                        <input class="" id="submit_butt" type="submit" value="Enregistrer">
+                    </button>
+                </div>
+            </center>
+    </form>
+    <br>
+    <div class="form-control w-full max-w-xs w-96">
+        <button class="btn btn-primary">
+           Modifier
+        </button>
+    </div>
+</div>
+    <div class="" style="position: fixed; bottom:20px; z-index:10; border-radius:30%; padding-left:5%;padding-right:5%; width:100% ">
         <center>
             {% include 'bottom_nav.html' %}
         </center>
     </div>
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $("#imagePreview").css(
+                        "background-image",
+                        "url(" + e.target.result + ")"
+                    );
+                    $("#imagePreview").hide();
+                    $("#imagePreview").fadeIn(650);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+            }
+            $("#imageUpload").change(function() {
+            readURL(this);
+            });
+        </script>
 </body>
+
 </html>

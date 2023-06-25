@@ -42,6 +42,8 @@ from _declaration import *
 # ================ {initialisation du projet} ===============
 
 # print(os.environ)
+from dotenv import load_dotenv
+load_dotenv()
 
 # ================Deta config
 cle_trouve_le = os.environ["cle_trouve_le"]
@@ -299,6 +301,64 @@ def declaration():
 @app.route("/settings")
 @login_required
 def settings():
+    print(get_all(users))
+    if request.method == "POST":
+        user = utilisateur()
+        user.nom = request.form["nom"]
+        user.prenoms = request.form["prenoms"]
+        user.naissance = request.form["naissance"]
+        user.npiece = request.form["npiece"]
+        user.piece = request.form["piece"]
+        user.tel = request.form["tel"]
+        user.key = user.tel
+        user.email = request.form["email"]
+        user.password = request.form["password"]
+        passwordconfirm = request.form["passwordconfirm"]
+        user.pp = str(user.tel) + ".png"
+        user.validate = False
+        if get_user(users, user.tel) and passwordconfirm != user.password:
+            return render_template(
+                "settings.html",
+                message="passe-confirm-error",
+            )
+        elif (
+            user_exist(users, user.tel)
+            and passwordconfirm == user.password
+            and passwordconfirm != ""
+        ):
+            if request.files["pp"]:
+                file_data = request.files.get("pp")
+                file_ext = file_data.filename.split(".")[-1]
+                user.pp = str(user.tel) + "." + file_ext
+                save_file(users_pp, user.pp, file_data)
+
+            else:
+                file_data = open("static/img/profile-default.png", "rb")
+                file_name = str(user.tel) + ".png"
+                save_file(users_pp, file_name, file_data.readlines())
+                file_data.close()
+
+            user.validate = gen_validation_code()
+            message = f"{current_user.name}, votre profil a été modifié avec succès."
+            objet = "MODIFICATION DE PROFILE UTILISATEUR"
+            destination = user.email
+            result = add_user(users, user)
+            print("Modification des données de l'utilisateur:", result)
+            if not result:
+                return render_template(
+                    "settings.html",
+                    message="erreur",
+                )
+            else:
+                send_mail(mail, objet, message, destination)
+                return redirect(url_for("accueil", key=user.key, mode=1))
+        else:
+            return render_template(
+                "signup.html",
+                message="passe-vide",
+            )
+    else:
+        return render_template("settings.html", message="")
     return render_template("settings.html")
 
 

@@ -36,7 +36,8 @@
         </style>
 </head>
 
-<bodpay class="" data-theme="night" class="">
+{% include 'theme.html' %}
+
     <div id="container" style="height:100vh;width:100vw;overflow:auto;">
         {% if message=="login-error" %}
         <center style="position: sticky; top:10px; z-index: 10;">

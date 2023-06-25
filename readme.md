@@ -51,7 +51,7 @@ set centrale_email=votremail@gmail.com # Ici nous avons l'adresse mail Pour envo
 set centrale_email_password=mot_de_passe_du_mail
 ```
 
-Si vous travailler dans un environnement unix (*Une distribution linux ou mac-os...*) n'oubliez pas de remplacer **set** par **export**
+Si vous travaillez dans un environnement unix (*Une distribution linux ou mac-os...*) n'oubliez pas de remplacer **set** par **export**
 
 ## Arboressence
 
@@ -120,7 +120,11 @@ Si vous travailler dans un environnement unix (*Une distribution linux ou mac-os
 - declaration
 - restauration de mot de passe
 - Contacter un autre utilisateur de la communauté
+- settings:
+  - Ecrire une fonction js qui permet de passer tous les inputs disabled="False" et afficher le bouton de soumission et masquer le bouton modifer (disabled)
 
+- notification:
+  - afficher la liste des notifications de l'utilisateur
 # Demos
 
 ![Gif 1](demo/demo1.gif) 

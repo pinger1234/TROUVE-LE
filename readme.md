@@ -53,6 +53,7 @@ set centrale_email_password=mot_de_passe_du_mail
 
 Si vous travaillez dans un environnement unix (*Une distribution linux ou mac-os...*) n'oubliez pas de remplacer **set** par **export**
 
+Vous pouvez aussi ajouter les cle dans un fichier '.env' a la racine et utiliser python-dotenv pour y avour accès
 ## Arboressence
 
 ```bash

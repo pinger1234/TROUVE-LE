@@ -50,13 +50,13 @@
             scroll-behavior: smooth;
         }
         .declaration{
-            border-radius:10% 10% 20% 40% / 20% 50% 20% 20%;
+            border-radius:10%;
             margin:1px;
             margin-top: 10px;
             animation: fadeInDownBig; 
             animation-duration: 1.5s; 
             padding: 2%;
-            width: auto;
+            width: 80%;
             flex-direction: column;
         }
         .dec-image{
@@ -115,10 +115,10 @@
             <figure><img class="dec-image mask mask-squircle" src="{{url_for('static',filename='img/default_pp.webp')}}" alt="Movie" /></figure>
             <div class="card-body">
                 <h2 class="card-title">N°: {{val}}</h2>
-                <p>Click the button to watch on ...</p>
-                <p> De: {{declarations[val].auteur}}</p>
-                <p> Le: {{declarations[val].date}}</p>
-                <!-- <p>{{declarations[val].description}}</p> -->
+                <p> <b>De:</b> {{declarations[val].auteur}}</p>
+                <p> <b>Le:</b> {{declarations[val].date}}</p>
+                <p> <b>A:</b> Yamoussoukro</p>
+                <b><p class="txt-primary">J'ai perdu mon telephone dans un taxi ce ...</p></b>
                 <div class="card-actions justify-end">
                     <button class="btn btn-primary">Plus</button>
                 </div>

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from urllib.parse import urlparse, urljoin
-
+from werkzeug.security import generate_password_hash, check_password_hash
 # 〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜
 # [0] [Importation des modules et packages]
 # 〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜〜
@@ -43,12 +43,14 @@ from _declaration import *
 # Token = "GvU7GWAn_4ZAs2z8fPiCk6HzxHajpRjDq4qAuYM45"
 # Datakey = "a03qi4zrdq7_Tr6fSQyVRzP9u7xgbyssQSoZzEeeceQY"
 
-cle_trouve_le = "a0azww1wj87_tJRPYB72Z9XWSpd5Nx4n6VMTNaUfakcZ"
+# cle_trouve_le = "a0azww1wj87_tJRPYB72Z9XWSpd5Nx4n6VMTNaUfakcZ"
+cle_trouve_le = "a0j21vwmstk_Jq4CUVuRjvTtUXt5eUqtQdVVycpnujgH"
 deta = Deta(cle_trouve_le)
 
 # ================ {Base de données} ===============
 
 users = deta.Base("users")
+histo_pass = deta.Base("histo_pass")
 declaration = deta.Base("declaration")
 type_objet = deta.Base("type_objet")
 
@@ -273,6 +275,88 @@ def logout():
     logout_user()
     return redirect(url_for("login"))
 
+
+@app.route("/resetpass", methods=["POST", "GET"])
+def resetpass():
+    user = utilisateur()
+    if request.method == "POST": 
+        user_ = request.form["user_identify"]
+        if is_tel(user_) and user_exist(users, user_):
+            use_data = get_user(users, user_)
+            user.email=use_data["email"]
+            user.validate = gen_validation_code()
+            use_data["validate"] = user.validate
+            update_user(users,user_,use_data,100)
+            message = validation_message_reset_pass(user.validate)
+            objet = "CODE DE REINITIALISATION DU MOT DE PASSE"
+            destination = user.email
+            status = send_mail(mail, objet, message, destination)
+            return redirect(url_for("validate_pass", key=user_))
+            # else:
+            #     return render_template("Reset_request.html",  title="Reset passe",val = user_, message="erreur")
+        else:
+            return render_template("Reset_request.html",  title="Reset passe",val = user_, message="erreur_utili")
+    return render_template("Reset_request.html", title="Reset passe")
+
+@app.route("/validate_pass/<key>", methods=["POST", "GET"])
+def validate_pass(key):
+    user = get_user(users, key)
+    if request.method == "GET":
+        if user:
+            return render_template("validation.html", message="")
+        else:
+            return render_template("session_error.html")
+    else:  
+        code = str(
+            str(request.form["n1"])
+            + str(request.form["n2"])
+            + str(request.form["n3"])
+            + str(request.form["n4"])
+            + str(request.form["n5"])
+            + str(request.form["n6"])
+        )
+        print(code)
+        confirmation = validate_user(users, key, code)
+        if confirmation:
+            return redirect(url_for("reset_pas"))
+        else:
+            return render_template("validation.html",message="bad-code")
+
+@app.route("/reset_pas", methods=["POST", "GET"])
+def reset_pas():
+    # update = False
+    # if request.method=="POST":
+    #     user_pass            = pass_user()
+    #     user_pass.autoincre  += 1
+    #     user_pass.key        = request.form["user_identify"]
+    #     user_pass.newpasswrd = request.form["user_password"]
+    #     user_pass.confnewpasswrd = request.form["user_newpassword"]
+        
+    #     if user_pass.key !="" and user_exist(users, user_pass.key) and user_pass.newpasswrd==user_pass.confnewpasswrd:
+    #         user = get_user(users, user_pass.key)
+    #         add_password(histo_pass,user_pass)
+    #         if user_exist(histo_pass, user_pass.key):
+    #             user["password"]= generate_password_hash(user_pass.newpasswrd)
+    #             update_user(users,user_pass.key,user,600)
+    #             print("******** Mot de passe modifier ********")
+    #             return render_template("reset_pass_form.html", title="Reinitialisation", message="erreur")
+
+    #     else:
+    #         return render_template("reset_pass_form.html", title="Reinitialisation", message="erreur_pass")
+
+    if request.method == "POST":
+        id_  = request.form["user_identify"]
+        newpass = request.form["user_password"]
+        confpass = request.form["user_newpassword"]
+        if id_ != "" and newpass == confpass:
+            user = get_user(users, id_)
+            hashe = generate_password_hash(newpass)
+            user ["password"] = hashe
+            update_user(users,id_, user, 600)
+            return redirect(url_for("login"))
+        else:
+             return render_template("reset_pass_form.html", title="Reinitialisation", message="erreur_pass")
+    return render_template("reset_pass_form.html", title="Reinitialisation")
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port="8080")

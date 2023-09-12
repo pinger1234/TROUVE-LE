@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% include 'header.html' %}
+    <title>{{title}}</title>
+    <style>
+        html, body{
+                margin: 0px;
+                padding:0px;
+            }
+            body{
+                display: flex;
+                flex-direction: column;
+                padding: 10%;
+                padding-top: 10%;
+                height: 100%;
+
+            }
+            form{
+                padding: 8%;
+            }
+        </style>
+</head>
+<body class="" data-theme="night">
+    {% if message == "erreur_utili" %}
+    <center style="position: sticky; top:10px; z-index: 10;">
+        <div class="alert alert-error shadow-lg" style="position: sticky; top:10px; z-index: 10;">
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span>L'identifiant {{val}} est incorrect ! </span>
+            </div>
+        </div>
+    </center>
+    {% endif %}
+    <form method="post" action="" class="card shadow-xl">
+        <center>
+            <img src="{{url_for('static',filename='img/logo.png')}}" style="width:50%" alt="image">
+        </center>
+        <form method="post" action="" class="card shadow-xl">
+            <br>
+            <center>
+                <div class="">
+                    <h2> Demande de reinitialisation du mot ?</h2>
+                    <p>Entrez votre Identifiant</p>
+                </div>
+                <br>
+                <div class="form-control w-full max-w-xs w-96">
+                    <input type="text" placeholder="Saisi ici" class="input input-bordered w-full max-w-xs" name="user_identify" />
+                </div>
+                <br>
+                    <a href="" class="btn btn-primary">
+                        <input type="submit" value="Reset password">
+                        <input type="hidden" value="{{ next or '' }}" name="next">
+                    </a>
+                <br>
+                <br>
+            </center>
+    </form>
+</body>
+</html>

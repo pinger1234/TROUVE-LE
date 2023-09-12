@@ -48,6 +48,43 @@
                     <span>Identifiant ou mot de passe incorrect !</span>
                 </div>
             </div>
+        </div>
+    </center>
+    {% endif %}
+    <center>
+        <img src="{{url_for('static',filename='img/logo.png')}}" style="width:50%" alt="">
+    </center>
+    <form method="post" action="" class="card shadow-xl">
+        <br>
+        <center>
+            <div class="form-control w-full max-w-xs w-96">
+                <label class="label">
+                    <span class="label-text">Identifiants</span>
+                </label>
+                <input type="text" placeholder="Saisir ici" class="input input-bordered w-full max-w-xs" name="key" />
+            </div>
+            <div class="form-control w-full max-w-xs">
+                <label class="label">
+                    <span class="label-text">Saisir votre mot de passe?</span>
+                </label>
+                <input type="password" placeholder="********" class="input input-bordered w-full max-w-xs" name="password" />
+            </div>
+            <div class="form-control w-full max-w-xs">
+                <label class="label cursor-pointer">
+                    <span class="label-text">Se souvenir de vous ?</span>
+                    <input type="checkbox" checked="checked" class="checkbox" name="remember" />
+                </label>
+            </div>
+            <br>
+            <button class="btn btn-primary"> <input type="submit" value="Connexion">
+                <input type="hidden" value="{{ next or '' }}" name="next"></button>
+            <br>
+            <div class="form-control w-full max-w-xs w-96">
+                <a href="/resetpass" class="link link-primary">Mot de passe oublié ?</a>
+            </div><br>
+            <a href="/signup" class="btn btn-outline btn-primary"><i class="fa fa-pencil"> </i> S'inscrire </a>
+            <br>
+            <br>
         </center>
         {% endif %}
         <center>

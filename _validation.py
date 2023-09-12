@@ -31,6 +31,12 @@ def validation_message(value):
     """
     return text
 
+def validation_message_reset_pass(value):
+    text = f"""Vous avez essayé de modifier le mot de passe de votre compte 'Trouve-le'. \n
+    Votre code de validation est : <b> {value} </b>. \n
+    Ce code expirera dans 10 minutes à compter de {datetime.datetime.now().strftime('%d-%m-%y %H:%M:%S')}.
+    """
+    return text
 
 def send_mail(mail, objet, message, destination):
     mail.send(receiver=destination, subject=objet, message=message)

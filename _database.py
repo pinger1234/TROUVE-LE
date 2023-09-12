@@ -42,10 +42,29 @@ def add_user(db, user):
             },
             expire_in=600,
         )
+        print("-------User enregistré--------")
+        return True
+    except:
+        print("++++ user pas enrégistré-------")
+        return False
+
+def add_password(db, user):
+    hashed = generate_password_hash(user.newpasswrd)
+    print("=========== je suis la================")
+    print(hashed)
+    try:
+        db.put(
+            {
+                "autoincre":user_pass.autoincre,
+                "key": user_pass.key,
+                "password": hashed,  
+            },
+            expire_in=600,
+        )
         print("-------User enregistré")
         return True
     except:
-        print("++++ user pas enrégistré")
+        print("++++ user pas enrégistré ************************+")
         return False
 
 
@@ -120,6 +139,14 @@ class utilisateur:
         self.passeword = ""
         self.validate = False
 
+class pass_user:
+    def __init__(self):
+        self.autoincre = 0
+        self.key = ""
+        self.newpasswrd = ""
+        self.confnewpasswrd=""
+        
+        
 
 def declarations():
     decla = {
